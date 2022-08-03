@@ -1,4 +1,4 @@
-name: Build and publish docker images
+name: 构建并发布 docker 镜像
 on:
   push:
     branches:
@@ -18,7 +18,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
-      - name: build Panel image
+      - name: 构建 panel 镜像
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -26,7 +26,7 @@ jobs:
           context: build/panel
           tags: ghcr.io/pterodactyl-china/development/panel:latest
 
-      - name: build Wings image
+      - name: 构建 Wings 镜像
         uses: docker/build-push-action@v2
         with:
           push: true
