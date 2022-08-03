@@ -6,7 +6,7 @@ CODE_DIR="$SCRIPT_DIR/code"
 for REPO in "panel" "documentation" "wings"
 do
   if [ ! -d "$CODE_DIR/$REPO" ]; then
-    git clone https://github.com/pterodactyl/$REPO.git "$CODE_DIR/$REPO"
+    git clone https://github.com/pterodactyl-china/$REPO.git "$CODE_DIR/$REPO"
   else
     echo "$REPO repository already cloned into: $CODE_DIR/$REPO"
   fi

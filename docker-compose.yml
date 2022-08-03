@@ -21,7 +21,7 @@ services:
       - ./docker/certificates:/etc/certs:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
   app:
-    image: ghcr.io/pterodactyl/development/panel:latest
+    image: ghcr.io/pterodactyl-china/development/panel:latest
     # build:
     #   context: ./build/panel
     #   dockerfile: Dockerfile
@@ -58,7 +58,7 @@ services:
       SESSION_DRIVER: redis
       CACHE_DRIVER: redis
   wings:
-    image: ghcr.io/pterodactyl/development/wings:latest
+    image: ghcr.io/pterodactyl-china/development/wings:latest
     # build:
     #   context: ./build/wings
     #   dockerfile: Dockerfile

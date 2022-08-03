@@ -2,7 +2,7 @@ FROM debian:11-slim
 
 LABEL maintainer="dane@daneeveritt.com" \
 	  description="Local development environment for Pterodactyl Panel." \
-	  org.opencontainers.image.source=https://github.com/pterodactyl/development
+	  org.opencontainers.image.source=https://github.com/pterodactyl-china/development
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG=C.UTF-8

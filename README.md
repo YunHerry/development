@@ -20,7 +20,7 @@ To begin clone this repository to your system, and then run `./setup.sh` which w
 additional git repositories, and setup your local certificates and host file routing.
 
 ```sh
-git clone https://github.com/pterodactyl/development.git
+git clone https://github.com/pterodactyl-china/development.git
 cd development
 ./setup.sh
 ```
