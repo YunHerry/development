@@ -6,7 +6,7 @@ on:
 
 jobs:
   images:
-    name: Build and push base image
+    name: 构建并推送基础镜像
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
