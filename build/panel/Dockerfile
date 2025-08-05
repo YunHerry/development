@@ -11,16 +11,14 @@ USER root
 
 # 步骤1: 安装基础工具
 RUN apt -y update \
-    && apt -y --no-install-recommends install \
+    && apt -y install \
         ca-certificates \
         curl \
         gnupg \
         lsb-release \
         software-properties-common \
         apt-transport-https \
-        sudo \
-    && apt -y clean \
-    && rm -rf /var/lib/apt/lists/*
+        sudo
 
 # 步骤2: 添加 Node.js 18 源
 RUN mkdir -p /etc/apt/keyrings \
@@ -48,21 +46,17 @@ RUN apt -y update \
         git \
         supervisor \
         cron \
-        nano \
-    && apt -y clean \
-    && rm -rf /var/lib/apt/lists/*
+        nano
 
 # 步骤6: 安装 Node.js 和 Yarn
 RUN apt -y update \
-    && apt -y --no-install-recommends install \
+    && apt -y install \
         nodejs \
-        yarn \
-    && apt -y clean \
-    && rm -rf /var/lib/apt/lists/*
+        yarn
 
 # 步骤7: 安装 PHP 和扩展
 RUN apt -y update \
-    && apt -y --no-install-recommends install \
+    && apt -y install \
         php8.2 \
         php8.2-cli \
         php8.2-common \
@@ -74,9 +68,7 @@ RUN apt -y update \
         php8.2-fpm \
         php8.2-curl \
         php8.2-zip \
-        php8.2-xdebug \
-    && apt -y clean \
-    && rm -rf /var/lib/apt/lists/*
+        php8.2-xdebug
 
 # 步骤8: 安装 Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
