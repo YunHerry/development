@@ -9,7 +9,7 @@ ENV LANG=C.UTF-8
 
 USER root
 
-# 一次性安装所有基础包
+# 步骤1: 安装基础工具
 RUN apt -y update \
     && apt -y --no-install-recommends install \
         ca-certificates \
@@ -19,24 +19,25 @@ RUN apt -y update \
         software-properties-common \
         apt-transport-https \
         sudo \
-    && apt -y update
+    && apt -y clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# 添加 NodeSource 仓库 (升级到 Node.js 18 或 20)
+# 步骤2: 添加 Node.js 18 源
 RUN mkdir -p /etc/apt/keyrings \
     && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
-    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/setup_18.x $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/nodesource.list
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_18.x $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/nodesource.list
 
-# 添加 Yarn 仓库
+# 步骤3: 添加 Yarn 源
 RUN curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarn.gpg \
     && echo "deb [signed-by=/etc/apt/keyrings/yarn.gpg] https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
-# 添加 Sury PHP 仓库
-RUN curl -sL https://packages.sury.org/php/apt.gpg | gpg --dearmor -o /etc/apt/keyrings/php.gpg \
+# 步骤4: 添加 PHP 源（使用官方方式）
+RUN curl -sSL https://packages.sury.org/php/README.txt \
+    && curl -sSL https://packages.sury.org/php/apt.gpg | gpg --dearmor -o /etc/apt/keyrings/php.gpg \
     && echo "deb [signed-by=/etc/apt/keyrings/php.gpg] https://packages.sury.org/php/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/php.list
 
-# 一次性安装所有软件包
+# 步骤5: 更新包列表并安装系统包
 RUN apt -y update \
-    && apt -y upgrade \
     && apt -y --no-install-recommends install \
         locales \
         iproute2 \
@@ -47,9 +48,21 @@ RUN apt -y update \
         git \
         supervisor \
         cron \
+        nano \
+    && apt -y clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# 步骤6: 安装 Node.js 和 Yarn
+RUN apt -y update \
+    && apt -y --no-install-recommends install \
         nodejs \
         yarn \
-        nano \
+    && apt -y clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# 步骤7: 安装 PHP 和扩展
+RUN apt -y update \
+    && apt -y --no-install-recommends install \
         php8.2 \
         php8.2-cli \
         php8.2-common \
@@ -62,8 +75,14 @@ RUN apt -y update \
         php8.2-curl \
         php8.2-zip \
         php8.2-xdebug \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && apt autoremove -y \
+    && apt -y clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# 步骤8: 安装 Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# 步骤9: 清理
+RUN apt autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
 # 用户和配置设置
