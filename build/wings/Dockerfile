@@ -27,14 +27,14 @@ RUN apt -y update \
         gcc \
         g++ \
         gdb \
-        python3 \  # Debian 12 中 python 改为 python3
+        python3 \
         docker-ce \
         docker-ce-cli \
         containerd.io \
         iproute2 \
         net-tools \
     && curl -OL "https://go.dev/dl/go1.21.8.linux-$(dpkg --print-architecture).tar.gz" \
-    && tar xvf "go1.21.8.linux-$(dpkg --print-architecture).tar.gz" -C /usr/local \  # 修复版本号
+    && tar xvf "go1.21.8.linux-$(dpkg --print-architecture).tar.gz" -C /usr/local \
     && chown -R root:root /usr/local/go \
     && rm -rf go*.gz \
     && /usr/local/go/bin/go install github.com/go-delve/delve/cmd/dlv@latest \
