@@ -25,4 +25,4 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           context: build/wings
-          tags: ghcr.io/pterodactyl-china/development/wings:latest
+          tags: ghcr.io/YunHerry/development/wings:latest
